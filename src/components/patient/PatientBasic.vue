@@ -159,10 +159,10 @@
               width="90">
             </el-table-column>
             <el-table-column
-              prop="workID"
+              prop="healthyID"
               width="85"
               align="left"
-              label="工号">
+              label="病人编号">
             </el-table-column>
             <el-table-column
               prop="gender"
@@ -182,9 +182,9 @@
               label="身份证号码">
             </el-table-column>
             <el-table-column
-              prop="wedlock"
+              prop="brief"
               width="70"
-              label="婚姻状况">
+              label="健康状况">
             </el-table-column>
             <el-table-column
               width="50"
@@ -277,13 +277,10 @@
             <el-table-column
               fixed="right"
               label="操作"
-              width="195">
+              width="120">
               <template slot-scope="scope">
                 <el-button @click="showEditPatientView(scope.row)" style="padding: 3px 4px 3px 4px;margin: 2px"
                            size="mini">编辑
-                </el-button>
-                <el-button style="padding: 3px 4px 3px 4px;margin: 2px" type="primary"
-                           size="mini">查看高级资料
                 </el-button>
                 <el-button type="danger" style="padding: 3px 4px 3px 4px;margin: 2px" size="mini"
                            @click="deletePatient(scope.row)">删除
@@ -320,7 +317,7 @@
               <div>
                 <el-form-item label="姓名:" prop="name">
                   <el-input prefix-icon="el-icon-edit" v-model="patient.name" size="mini" style="width: 150px"
-                            placeholder="请输入员工姓名"></el-input>
+                            placeholder="请输入病人姓名"></el-input>
                 </el-form-item>
               </div>
             </el-col>
@@ -381,7 +378,7 @@
             <el-col :span="5">
               <div>
                 <el-form-item label="籍贯:" prop="nativePlace">
-                  <el-input v-model="patient.nativePlace" size="mini" style="width: 120px" placeholder="员工籍贯"></el-input>
+                  <el-input v-model="patient.nativePlace" size="mini" style="width: 120px" placeholder="病人籍贯"></el-input>
                 </el-form-item>
               </div>
             </el-col>
@@ -461,9 +458,9 @@
           <el-row>
             <el-col :span="6">
               <div>
-                <el-form-item label="工号:" prop="workID">
-                  <el-input v-model="patient.workID" disabled size="mini" style="width: 150px"
-                            placeholder="员工工号..."></el-input>
+                <el-form-item label="工号:" prop="healthyID">
+                  <el-input v-model="patient.healthyID" disabled size="mini" style="width: 150px"
+                            placeholder="病人编号..."></el-input>
                 </el-form-item>
               </div>
             </el-col>
@@ -529,28 +526,28 @@
             </el-col>
             <el-col :span="6">
               <div>
-                <el-form-item label="入院日期:" prop="beginContract">
+                <el-form-item label="入院病情详情:" prop="beginContract">
                   <el-date-picker
                     v-model="patient.beginContract"
                     size="mini"
                     value-format="yyyy-MM-dd HH:mm:ss"
                     style="width: 135px"
                     type="date"
-                    placeholder="入院日期">
+                    placeholder="入院病情详情">
                   </el-date-picker>
                 </el-form-item>
               </div>
             </el-col>
             <el-col :span="6">
               <div>
-                <el-form-item label="出院日期:" prop="endContract">
+                <el-form-item label="出院病情详情:" prop="endContract">
                   <el-date-picker
                     v-model="patient.endContract"
                     value-format="yyyy-MM-dd HH:mm:ss"
                     size="mini"
                     style="width: 135px"
                     type="date"
-                    placeholder="出院日期">
+                    placeholder="出院病情详情">
                   </el-date-picker>
                 </el-form-item>
               </div>
@@ -561,7 +558,7 @@
               <div>
                 <el-form-item label="身份证号码:" prop="idCard">
                   <el-input prefix-icon="el-icon-edit" v-model="patient.idCard" size="mini" style="width: 180px"
-                            placeholder="请输入员工身份证号码..."></el-input>
+                            placeholder="请输入病人身份证号码..."></el-input>
                 </el-form-item>
               </div>
             </el-col>
@@ -577,11 +574,11 @@
             </el-col>
             <el-col :span="8">
               <div>
-                <el-form-item label="婚姻状况:" prop="wedlock">
-                  <el-radio-group v-model="patient.wedlock">
-                    <el-radio label="已婚">已婚</el-radio>
-                    <el-radio style="margin-left: 15px" label="未婚">未婚</el-radio>
-                    <el-radio style="margin-left: 15px" label="离异">离异</el-radio>
+                <el-form-item label="健康状况:" prop="brief">
+                  <el-radio-group v-model="patient.brief">
+                    <el-radio label="良好">良好</el-radio>
+                    <el-radio style="margin-left: 15px" label="严重">严重</el-radio>
+                    <el-radio style="margin-left: 15px" label="非常严重">非常严重</el-radio>
                   </el-radio-group>
                 </el-form-item>
               </div>
@@ -635,7 +632,7 @@
           gender: '',
           birthday: '',
           idCard: '',
-          wedlock: '',
+          brief: '',
           nationId: '',
           nativePlace: '',
           politicId: '',
@@ -652,7 +649,7 @@
           school: '',
           beginDate: '',
           workState: '',
-          workID: '',
+          healthyID: '',
           contractTerm: '',
           conversionTime: '',
           notWorkDate: '',
@@ -673,7 +670,7 @@
             message: '身份证号码格式不正确',
             trigger: 'blur'
           }],
-          wedlock: [{required: false, message: '必填:婚姻状况', trigger: 'blur'}],
+          brief: [{required: true, message: '健康状况', trigger: 'blur'}],
           nationId: [{required: false, message: '必填:民族', trigger: 'change'}],
           nativePlace: [{required: false, message: '必填:籍贯', trigger: 'blur'}],
           politicId: [{required: false, message: '必填:政治面貌', trigger: 'blur'}],
@@ -687,16 +684,16 @@
           departmentId: [{required: true, message: '必填:科室', trigger: 'change'}],
           jobLevelId: [{required: false, message: '必填:职称', trigger: 'change'}],
           posId: [{required: false, message: '必填:职位', trigger: 'change'}],
-          engageForm: [{required: false, message: '必填:聘用形式', trigger: 'blur'}],
-          tiptopDegree: [{required: false, message: '必填:最高学历', trigger: 'change'}],
-          specialty: [{required: false, message: '必填:专业', trigger: 'blur'}],
-          workID: [{required: false, message: '必填:工号', trigger: 'blur'}],
+          engageForm: [{required: false, message: 'engageForm', trigger: 'blur'}],
+          tiptopDegree: [{required: false, message: 'tiptopDegree', trigger: 'change'}],
+          specialty: [{required: false, message: 'specialty', trigger: 'blur'}],
+          healthyID: [{required: true, message: '病人编号', trigger: 'blur'}],
           school: [{required: false, message: '必填:毕业院校', trigger: 'blur'}],
-          beginDate: [{required: false, message: '必填:入职日期', trigger: 'blur'}],
-          conversionTime: [{required: false, message: '必填:转正日期', trigger: 'blur'}],
-          beginContract: [{required: false, message: '必填:合同起始日期', trigger: 'blur'}],
-          endContract: [{required: false, message: '必填:合同终止日期', trigger: 'blur'}],
-          workAge: [{required: false, message: '必填:工龄', trigger: 'blur'}]
+          beginDate: [{required: false, message: '入院日期', trigger: 'blur'}],
+          conversionTime: [{required: false, message: '转院日期', trigger: 'blur'}],
+          beginContract: [{required: false, message: '住院时病情详情', trigger: 'blur'}],
+          endContract: [{required: false, message: '出院时病情详情', trigger: 'blur'}],
+          workAge: [{required: false, message: '病史', trigger: 'blur'}]
         }
       };
     },
@@ -868,13 +865,13 @@
             _this.deps = data.deps;
             _this.positions = data.positions;
             _this.joblevels = data.joblevels;
-            _this.patient.workID = data.workID;
+            _this.patient.healthyID = data.healthyID;
           }
         })
       },
       showEditPatientView(row) {
         console.log(row)
-        this.dialogTitle = "编辑员工";
+        this.dialogTitle = "编辑病人";
         this.patient = row;
         this.patient.birthday = this.formatDate(row.birthday);
         this.patient.conversionTime = this.formatDate(row.conversionTime);
@@ -898,9 +895,9 @@
         this.dialogTitle = "添加病人";
         this.dialogVisible = true;
         var _this = this;
-        this.getRequest("/patient/basic/maxWorkID").then(resp => {
+        this.getRequest("/patient/basic/maxHealthyID").then(resp => {
           if (resp && resp.status == 200) {
-            _this.patient.workID = resp.data;
+            _this.patient.healthyID = resp.data;
           }
         })
       },
@@ -910,7 +907,7 @@
           gender: '',
           birthday: '',
           idCard: '',
-          wedlock: '',
+          brief: '',
           nationId: '',
           nativePlace: '',
           politicId: '',
@@ -927,7 +924,7 @@
           school: '',
           beginDate: '',
           workState: '',
-          workID: '',
+          healthyID: '',
           contractTerm: '',
           conversionTime: '',
           notWorkDate: '',
